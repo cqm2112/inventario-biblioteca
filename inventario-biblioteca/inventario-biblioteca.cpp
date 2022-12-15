@@ -3,22 +3,23 @@
 
 using namespace std;
 
-struct Producto
+struct Libro
 {
-    char nombre[20];
+  string nombre;
     float precio;
     int cantidad;
 };
 
 void menu();
-int altaProducto(Producto p[], int cont);
-void ventaProducto(Producto p[], int cont);
-void imprimeInventario(const Producto p[], const int cont);
+int altaLibro(Libro p[], int cont);
+void ventaLibro(Libro p[], int cont);
+void imprimeInventario(const Libro p[], const int cont);
+void modificarLibro(Libro p[], int cont);
 
 int main()
 {
-    Producto listaProductos[10];
-    int contProducto = 0;
+    Libro listaLibros[10];
+    int contLibro = 0;
     char opcion;
 
     do {
@@ -28,19 +29,22 @@ int main()
         switch (opcion)
         {
         case '1':
-            contProducto = altaProducto(listaProductos, contProducto);
+            contLibro = altaLibro(listaLibros, contLibro);
             break;
 
         case '2':
-            ventaProducto(listaProductos, contProducto);
+            ventaLibro(listaLibros, contLibro);
             break;
 
         case '3':
-            imprimeInventario(listaProductos, contProducto);
+            imprimeInventario(listaLibros, contLibro);
             break;
 
         case '4':
             cout << "\n\nFIN DEL PROGRAMA" << endl;
+            break;
+        case '5':
+            modificarLibro(listaLibros, contLibro);
             break;
 
         default:
@@ -55,22 +59,23 @@ int main()
 
 void menu()
 {
-    cout << "\n         MUEBLES"
+    cout << "\n         Biblioteca"
         << "\n==========================="
-        << "\n1.- Alta Producto "
-        << "\n2.- Venta Producto"
-        << "\n3.- Impresion de Inventario"
+        << "\n1.- Agregar Libro"
+        << "\n2.- Venta libro"
+        << "\n3.- Consultar libros"
         << "\n4.- Salir"
+        << "\n5.- modificar libros"
         << "\n==========================="
-        << "\nOPCION (1-4): ";
+        << "\nO Seleccione una opcion(1-4): ";
 }
 
-int altaProducto(Producto p[], int cont)
+int altaLibro(Libro p[], int cont)
 {
     if (cont < 10)
     {
         cin.ignore(80, '\n');
-        cout << "\nNombre: "; cin.getline(p[cont].nombre, 50);
+        cout << "\nNombre: ";  cin >> p[cont].nombre;
         cout << "Precio: "; cin >> p[cont].precio;
         cout << "Cantidad: "; cin >> p[cont].cantidad;
 
@@ -82,15 +87,15 @@ int altaProducto(Producto p[], int cont)
     return cont;
 }
 
-void ventaProducto(Producto p[], int cont)
+void ventaLibro(Libro p[], int cont)
 {
     int numero, cantidad;
 
-    cout << "\nNumero o Codigo del Producto: ";
+    cout << "\nNumero o Codigo del Libro: ";
     cin >> numero;
 
     if (numero >= cont)
-        cout << "\n\nEL PRIDUCTO NO EXISTE" << endl;
+        cout << "\n\nEL LIBRO NO SE ENCUENTRA" << endl;
     else
     {
         cout << "Cantidad: "; cin >> cantidad;
@@ -107,8 +112,37 @@ void ventaProducto(Producto p[], int cont)
 
     }
 }
+void modificarLibro(Libro p[], int cont)
+{
+    int numero, cantidad, precio;
+    string nombre;
 
-void imprimeInventario(const Producto p[], int cont)
+    cout << "\nNumero o Codigo del Libro: ";
+    cin >> numero;
+    cout << "\nNombre a modificar: ";
+    cin >> nombre;
+    cout << "\nPrecio a modificar: ";
+    cin >> precio;
+
+    if (numero >= cont)
+        cout << "\n\nEL LIBRO NO SE ENCUENTRA" << endl;
+    else
+    {
+        cout << "Cantidad: "; cin >> cantidad;
+
+        p[numero].nombre = nombre;
+        p[numero].precio = precio;
+        p[numero].cantidad =  cantidad;
+
+
+          
+            cout << "se ha modificado el registro numero: " << numero << endl;
+        
+
+    }
+}
+
+void imprimeInventario(const Libro p[], int cont)
 {
     cout << "\n             INVENTARIO"
         << "\n========================================="
